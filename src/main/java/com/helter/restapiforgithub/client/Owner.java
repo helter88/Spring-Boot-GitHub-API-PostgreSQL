@@ -1,4 +1,4 @@
-package com.helter.restapiforgithub;
+package com.helter.restapiforgithub.client;
 
 public record Owner(String login) {
     

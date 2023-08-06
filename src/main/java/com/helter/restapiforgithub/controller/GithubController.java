@@ -1,10 +1,14 @@
-package com.helter.restapiforgithub;
+package com.helter.restapiforgithub.controller;
+
+import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.helter.restapiforgithub.service.GithubService;
 
 
 @RestController
@@ -20,9 +24,9 @@ public class GithubController {
 
     
     @GetMapping("/{userName}")
-    public ResponseEntity<String> getAllNotForkRepositoriesByUsername(@PathVariable String userName) {
-        githubService.getAllRepoByUserName(userName);
+    public ResponseEntity<List<RequiredResponseDto>> getAllNotForkRepositoriesByUsername(@PathVariable String userName) {
+        List<RequiredResponseDto> allRepoByUserName = githubService.getAllRepoByUserName(userName);
 
-        return ResponseEntity.ok("Found repository for username: " + userName);
+        return ResponseEntity.ok(allRepoByUserName);
     }
 }

@@ -1,0 +1,24 @@
+package com.helter.restapiforgithub.error;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import com.helter.restapiforgithub.controller.GithubController;
+
+import lombok.extern.log4j.Log4j2;
+
+@RestControllerAdvice(assignableTypes = GithubController.class)
+@Log4j2
+public class GithubErrorHandler {
+
+    @ExceptionHandler(NotFoundException.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponseDto handleException(NotFoundException exception){
+        log.warn("Couldn't access resource");
+        return new ErrorResponseDto(HttpStatus.NOT_FOUND, exception.getMessage());
+    }
+}
