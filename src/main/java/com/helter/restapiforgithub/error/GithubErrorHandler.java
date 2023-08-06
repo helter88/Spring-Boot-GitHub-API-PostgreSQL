@@ -17,8 +17,16 @@ public class GithubErrorHandler {
     @ExceptionHandler(NotFoundException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResponseDto handleException(NotFoundException exception){
+    public ErrorResponseDto handleNotFoundException(NotFoundException exception){
         log.warn("Couldn't access resource");
         return new ErrorResponseDto(HttpStatus.NOT_FOUND, exception.getMessage());
+    }
+
+    @ExceptionHandler(InvalidFormatException.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
+    public ErrorResponseDto handleInvalidFormatException (InvalidFormatException exception){
+        log.warn("Invalid Format");
+        return new ErrorResponseDto(HttpStatus.NOT_ACCEPTABLE, exception.getMessage());
     }
 }
