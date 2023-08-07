@@ -1,6 +1,7 @@
 package com.helter.restapiforgithub.error;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -22,10 +23,10 @@ public class GithubErrorHandler {
         return new ErrorResponseDto(HttpStatus.NOT_FOUND, exception.getMessage());
     }
 
-    @ExceptionHandler(InvalidFormatException.class)
+    @ExceptionHandler(InvalidAcceptException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
-    public ErrorResponseDto handleInvalidFormatException (InvalidFormatException exception){
+    public ErrorResponseDto handleInvalidFormatException (InvalidAcceptException exception){
         log.warn("Invalid Format");
         return new ErrorResponseDto(HttpStatus.NOT_ACCEPTABLE, exception.getMessage());
     }
