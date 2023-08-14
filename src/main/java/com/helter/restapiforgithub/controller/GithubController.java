@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,19 +23,22 @@ public class GithubController {
     public GithubController(GithubService githubService) {
         this.githubService = githubService;
     }
-    @GetMapping("/{userName}")
+    @GetMapping("/username/{userName}")
     public ResponseEntity<List<RequiredResponseDto>> getAllNotForkRepositoriesByUsername(@PathVariable String userName) {
-      
         List<RequiredResponseDto> allRepoByUserName = githubService.getAllRepoByUserName(userName);
-
         return ResponseEntity.ok(allRepoByUserName);
     }
 
     @GetMapping
     public ResponseEntity<List<RequiredResponseDto>> getAll(Pageable pageable) {
         List<RequiredResponseDto> allRepo = githubService.getAll(pageable);
-
         return ResponseEntity.ok(allRepo);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<RequiredResponseDto> getById(@PathVariable Long id) {
+        RequiredResponseDto responseRepo = githubService.getById(id);
+        return ResponseEntity.ok(responseRepo);
     }
 
     @PostMapping
@@ -42,10 +46,16 @@ public class GithubController {
         githubService.post(requestRepoDto);
         return ResponseEntity.noContent().build();
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<RequiredResponseDto> delete(@PathVariable Long id) {
         RequiredResponseDto repoToDelete = githubService.delete(id);
-
         return ResponseEntity.ok(repoToDelete);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> update(@PathVariable Long id,@RequestBody RequestRepoDto requestRepoDto) {
+        githubService.update(id, requestRepoDto);
+        return ResponseEntity.noContent().build();
     }
 }

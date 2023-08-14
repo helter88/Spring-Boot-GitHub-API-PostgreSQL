@@ -13,6 +13,7 @@ import com.helter.restapiforgithub.error.NotFoundException;
 import com.helter.restapiforgithub.model.Repo;
 import com.helter.restapiforgithub.repository.RepoRepository;
 
+import jakarta.transaction.Transactional;
 import lombok.extern.log4j.Log4j2;
 
 @Service
@@ -69,6 +70,12 @@ public class GithubService {
         return dto;
     }
 
+     public RequiredResponseDto getById(Long id) {
+        Repo foundedRepo = repoRepository.findById(id).orElseThrow(() -> new NotFoundException("Couldn't find id: " + id));
+        RequiredResponseDto dto = new RequiredResponseDto(foundedRepo.getId(), foundedRepo.getOwner(), foundedRepo.getName());
+        return dto;
+    }
+
     public void post(RequestRepoDto dto){
         Repo newRepo = new Repo(dto.owner(), dto.name());
         repoRepository.save(newRepo);
@@ -78,5 +85,12 @@ public class GithubService {
         Repo repoToDelete = repoRepository.findById(id).orElseThrow(() -> new NotFoundException("Couldn't find id: " + id));
         repoRepository.deleteById(id);
         return new RequiredResponseDto(repoToDelete.getId(), repoToDelete.getOwner(), repoToDelete.getName());
+    }
+
+    @Transactional
+    public void update(Long id, RequestRepoDto dto) {
+        Repo repoToUpdate = repoRepository.findById(id).orElseThrow(() -> new NotFoundException("Couldn't find id: " + id));
+        repoToUpdate.setOwner(dto.owner());
+        repoToUpdate.setName(dto.name());
     }
 }
