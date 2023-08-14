@@ -67,4 +67,10 @@ public class GithubService {
 
         return dto;
     }
+
+    public RequiredResponseDto delete(Long id) {
+        Repo repoToDelete = repoRepository.findById(id).orElseThrow(() -> new NotFoundException("Couldn't find id: " + id));
+        repoRepository.deleteById(id);
+        return new RequiredResponseDto(repoToDelete.getId(), repoToDelete.getOwner(), repoToDelete.getName());
+    }
 }

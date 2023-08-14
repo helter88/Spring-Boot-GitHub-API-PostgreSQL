@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,5 +33,12 @@ public class GithubController {
         List<RequiredResponseDto> allRepo = githubService.getAll(pageable);
 
         return ResponseEntity.ok(allRepo);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<RequiredResponseDto> delete(@PathVariable Long id) {
+        RequiredResponseDto repoToDelete = githubService.delete(id);
+
+        return ResponseEntity.ok(repoToDelete);
     }
 }

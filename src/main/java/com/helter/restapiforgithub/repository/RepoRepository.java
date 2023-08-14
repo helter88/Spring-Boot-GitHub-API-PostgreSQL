@@ -1,6 +1,7 @@
 package com.helter.restapiforgithub.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.Repository;
@@ -15,5 +16,9 @@ public interface RepoRepository extends Repository<Repo, Long>{
 
     List<Repo> findByOwnerAndName(String owner, String name);
 
+    Optional<Repo> findById(Long id);
+
     Repo save(Repo repo);
+
+    void deleteById(Long id);
 }
