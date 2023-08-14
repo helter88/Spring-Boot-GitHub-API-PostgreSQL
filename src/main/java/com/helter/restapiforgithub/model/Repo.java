@@ -24,6 +24,9 @@ public class Repo {
     @NotNull
     String name;
 
+      public Repo() {
+    }
+
     public Repo(String owner, String name) {
         this.owner = owner;
         this.name = name;
