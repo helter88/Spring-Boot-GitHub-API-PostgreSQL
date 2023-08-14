@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.helter.restapiforgithub.client.GithubClient;
+import com.helter.restapiforgithub.controller.RequestRepoDto;
 import com.helter.restapiforgithub.controller.RequiredResponseDto;
 import com.helter.restapiforgithub.error.NotFoundException;
 import com.helter.restapiforgithub.model.Repo;
@@ -66,6 +67,11 @@ public class GithubService {
         });
 
         return dto;
+    }
+
+    public void post(RequestRepoDto dto){
+        Repo newRepo = new Repo(dto.owner(), dto.name());
+        repoRepository.save(newRepo);
     }
 
     public RequiredResponseDto delete(Long id) {
