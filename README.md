@@ -87,7 +87,7 @@ Expected answer:
   "name": "repositoryName"
 }
 ```
-# How to run project
+## How to run project
 
 1. Download repo from Github to one of your chosen folder.
 2. Run Terminal and select your folder with downloaded project.
