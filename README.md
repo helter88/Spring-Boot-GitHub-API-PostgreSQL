@@ -101,5 +101,6 @@ Expected answer:
 - Spring Boot
 - Spring Data
 - Open Feign
-- Tailwind CSS
+- PostgreSQL
+- Docker
 - [The GitHub API](https://docs.github.com/en "click to visit API website")
